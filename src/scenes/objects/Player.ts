@@ -9,6 +9,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
   movementSpeed: number;
   declare body: Phaser.Physics.Arcade.Body;
 
+  isInvincible: boolean;
+  invincibilityDuration: number;
+
   constructor(scene: Phaser.Scene, initForwardSpeed: number) {
     super(scene, 100, internalHeight / 2, "player");
     this.setScale(0.1);
@@ -26,9 +29,27 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     this.body.setVelocityX(initForwardSpeed)
     this.movementSpeed = 200;
+
+    this.isInvincible = false;
   }
 
-  update(time: number, delta: number) {
+  onOverlapWithEnemy() {
+    if (this.isInvincible) return;
+    this.isInvincible = true;
+    this.scene.tweens.add({
+      targets: this,
+      alpha: { from: 1, to: 0},
+      duration: 200,
+      repeat: 2,
+      yoyo: true,
+      onComplete: (tween, target) => {
+        this.isInvincible = false;
+      }
+    })
+    
+  }
+
+  update() {
     if (this.upKey.isDown) {
       this.body.setVelocityY(-this.movementSpeed)
     }
