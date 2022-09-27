@@ -21,6 +21,7 @@ export default class Demo extends Phaser.Scene {
     this.load.image("bg", "assets/bg.png");
     this.load.image("player", "assets/player.png");
     this.load.image("asteroid1", "assets/asteroid1.png");
+    this.load.image("bullet", "assets/bullet.png")
   }
 
   create() {
