@@ -9,19 +9,14 @@ export default class SwingingAsteroids extends Asteroids {
 
   constructor(scene: Phaser.Scene) {
     super(scene);
+    this.initialLives = 1000;
     this.timeDeltaSpawn = 4000;
     this.speed = 100
   }
 
   spawn() {
-    const xpos =  this.camera.scrollX + internalWidth + Phaser.Math.Between(30, 40);
-    const ypos = Phaser.Math.Between(0, internalHeight);
-
-    const newAsteroid = this.get(xpos, ypos);
-    newAsteroid.setRotation(Phaser.Math.Between(0, Phaser.Math.PI2))
-    this.scene.physics.add.existing(newAsteroid);
-    newAsteroid.active = true;
-    newAsteroid.visible = true;
+    super.spawn();
+    const newAsteroid = this.getLast(true);
 
     newAsteroid.body.setVelocityY(-this.speed);
     newAsteroid.body.setVelocityX(-this.speed / 2);

@@ -7,6 +7,7 @@ export default class Asteroids extends Phaser.GameObjects.Group {
   camera: Phaser.Cameras.Scene2D.Camera;
   timeToNextSpawn: number;
   timeDeltaSpawn: number;
+  initialLives: number;
 
   constructor(scene: Phaser.Scene) {
     super(scene, {
@@ -19,7 +20,9 @@ export default class Asteroids extends Phaser.GameObjects.Group {
     this.camera = scene.cameras.main;
 
     this.timeToNextSpawn = 20;
-    this.timeDeltaSpawn = 1000
+    this.timeDeltaSpawn = 1000;
+
+    this.initialLives = 50;
   }
 
   spawn(n: number = 1) {
@@ -28,10 +31,18 @@ export default class Asteroids extends Phaser.GameObjects.Group {
     const ypos = Phaser.Math.Between(0, internalHeight);
 
     for (let i = 0; i < n; i++) {
-      const newAsteroid = this.get(xpos, ypos);
+      //const newAsteroid = this.get(xpos, ypos);
+      let newAsteroid = this.getFirstDead();
+      if (!newAsteroid) {
+        newAsteroid = new BasicEnemy(this.scene, xpos, ypos, this.defaultKey, this.initialLives);
+        this.add(newAsteroid)
+      }
+      
+      newAsteroid.setPosition(xpos, ypos);
       newAsteroid.setRotation(Phaser.Math.Between(0, Phaser.Math.PI2))
       
       this.scene.physics.add.existing(newAsteroid);
+
       newAsteroid.active = true;
       newAsteroid.visible = true;
     }

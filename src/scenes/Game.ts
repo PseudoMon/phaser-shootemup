@@ -52,6 +52,14 @@ export default class Demo extends Phaser.Scene {
       this.playerBullets.killAndHide(bullet);
       this.physics.world.remove(bullet.body);
     })
+
+    this.physics.world.addOverlap(this.swingingAsteroids, this.playerBullets, (asteroid, bullet) => {
+      if (!(asteroid instanceof BasicEnemy)) return;
+      asteroid.reduceLife();
+
+      this.playerBullets.killAndHide(bullet);
+      this.physics.world.remove(bullet.body);
+    })
   }
 
   update(time: number, delta: number) {

@@ -9,10 +9,11 @@ export default class BasicEnemy extends Phaser.GameObjects.Sprite {
   initialLives: number;
   currentLives: number;
 
-  constructor(scene: Phaser.Scene, x: number, y: number, texture: string, initialLives: number = 50) {
+  constructor(scene: Phaser.Scene, x: number, y: number, texture: string, initialLives: number = 20) {
     super(scene, x, y, texture);
     this.initialLives = initialLives;
     this.currentLives = this.initialLives; 
+    scene.add.existing(this)
   }
 
   get isAlive(): boolean {
