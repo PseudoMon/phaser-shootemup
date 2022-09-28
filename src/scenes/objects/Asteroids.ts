@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import BasicEnemy from "./BasicEnemy"
 import { internalWidth, internalHeight } from "../../config"
 
 export default class Asteroids extends Phaser.GameObjects.Group {
@@ -10,6 +11,7 @@ export default class Asteroids extends Phaser.GameObjects.Group {
   constructor(scene: Phaser.Scene) {
     super(scene, {
       defaultKey: "asteroid1",
+      classType: BasicEnemy,
     })
     scene.add.existing(this)
 
@@ -28,6 +30,7 @@ export default class Asteroids extends Phaser.GameObjects.Group {
     for (let i = 0; i < n; i++) {
       const newAsteroid = this.get(xpos, ypos);
       newAsteroid.setRotation(Phaser.Math.Between(0, Phaser.Math.PI2))
+      
       this.scene.physics.add.existing(newAsteroid);
       newAsteroid.active = true;
       newAsteroid.visible = true;

@@ -4,6 +4,7 @@ import Player from "./objects/Player";
 import Asteroids from "./objects/Asteroids";
 import SwingingAsteroids from "./objects/SwingingAsteroids";
 import PlayerBullets from "./objects/PlayerBullets";
+import BasicEnemy from "./objects/BasicEnemy";
 
 export default class Demo extends Phaser.Scene {
    player!: Player;
@@ -29,6 +30,7 @@ export default class Demo extends Phaser.Scene {
 
   create() {
     const bg = this.add.tileSprite(internalWidth / 2, internalHeight / 2, 3000, internalHeight, "bg");
+    
     this.player = new Player(this, this.forwardSpeed);
     this.asteroids = new Asteroids(this);
     this.swingingAsteroids = new SwingingAsteroids(this)
@@ -38,6 +40,17 @@ export default class Demo extends Phaser.Scene {
 
     this.physics.world.addOverlap(this.player, this.asteroids, () => {
       this.player.onOverlapWithEnemy()
+    })
+
+    this.physics.world.addOverlap(this.asteroids, this.playerBullets, (asteroid, bullet) => {
+      if (!(asteroid instanceof BasicEnemy)) return;
+      
+      asteroid.reduceLife()
+      // this.asteroids.killAndHide(asteroid);
+      // this.physics.world.remove(asteroid.body);
+
+      this.playerBullets.killAndHide(bullet);
+      this.physics.world.remove(bullet.body);
     })
   }
 

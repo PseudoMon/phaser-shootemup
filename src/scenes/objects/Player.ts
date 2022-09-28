@@ -75,7 +75,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
     }
 
     if (this.isShooting && this.bulletManager) {
-      console.log("WEE")
       this.bulletManager.setShootPosition(this.x, this.y);
     }
     if (!this.isShooting && this.bulletManager) {
