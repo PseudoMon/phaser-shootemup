@@ -2,6 +2,8 @@ import Phaser from "phaser";
 import BasicEnemy from "./BasicEnemy"
 import { internalWidth, internalHeight } from "../../config"
 
+// TODO uses BasicEnemies instead
+
 export default class Asteroids extends Phaser.GameObjects.Group {
   scene: Phaser.Scene;
   camera: Phaser.Cameras.Scene2D.Camera;

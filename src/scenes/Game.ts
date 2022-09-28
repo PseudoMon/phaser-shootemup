@@ -5,6 +5,7 @@ import Asteroids from "./objects/Asteroids";
 import SwingingAsteroids from "./objects/SwingingAsteroids";
 import PlayerBullets from "./objects/PlayerBullets";
 import BasicEnemy from "./objects/BasicEnemy";
+import HomingEnemies from "./objects/HomingEnemies";
 
 export default class Demo extends Phaser.Scene {
    player!: Player;
@@ -24,7 +25,8 @@ export default class Demo extends Phaser.Scene {
     this.load.image("bg", "assets/bg.png");
     this.load.image("player", "assets/player.png");
     this.load.image("asteroid1", "assets/asteroid1.png");
-    this.load.image("bullet", "assets/bullet.png")
+    this.load.image("bullet", "assets/bullet.png");
+    this.load.image("enemy3b", "assets/enemy3b.png");
   }
 
   create() {
@@ -37,6 +39,7 @@ export default class Demo extends Phaser.Scene {
     this.enemies = [];
     this.enemies.push(new Asteroids(this));
     this.enemies.push(new SwingingAsteroids(this));
+    this.enemies.push(new HomingEnemies(this, this.player));
 
     this.enemies.forEach((enemyType) => {
       this.physics.world.addOverlap(enemyType, this.player, () => {
