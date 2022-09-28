@@ -8,9 +8,8 @@ import BasicEnemy from "./objects/BasicEnemy";
 
 export default class Demo extends Phaser.Scene {
    player!: Player;
-   asteroids!: Asteroids;
-   swingingAsteroids!: SwingingAsteroids;
    playerBullets!: PlayerBullets;
+   enemies!: Asteroids[];
 
    forwardSpeed: number;
 
@@ -32,42 +31,35 @@ export default class Demo extends Phaser.Scene {
     const bg = this.add.tileSprite(internalWidth / 2, internalHeight / 2, 3000, internalHeight, "bg");
     
     this.player = new Player(this, this.forwardSpeed);
-    this.asteroids = new Asteroids(this);
-    this.swingingAsteroids = new SwingingAsteroids(this)
-    this.playerBullets = new PlayerBullets(this)
-
+    this.playerBullets = new PlayerBullets(this);
     this.player.setBulletManager(this.playerBullets);
 
-    this.physics.world.addOverlap(this.player, this.asteroids, () => {
-      this.player.onOverlapWithEnemy()
-    })
+    this.enemies = [];
+    this.enemies.push(new Asteroids(this));
+    this.enemies.push(new SwingingAsteroids(this));
 
-    this.physics.world.addOverlap(this.asteroids, this.playerBullets, (asteroid, bullet) => {
-      if (!(asteroid instanceof BasicEnemy)) return;
-      
-      asteroid.reduceLife()
-      // this.asteroids.killAndHide(asteroid);
-      // this.physics.world.remove(asteroid.body);
+    this.enemies.forEach((enemyType) => {
+      this.physics.world.addOverlap(enemyType, this.player, () => {
+        this.player.onOverlapWithEnemy()
+      })
 
-      this.playerBullets.killAndHide(bullet);
-      this.physics.world.remove(bullet.body);
-    })
+      this.physics.world.addOverlap(enemyType, this.playerBullets, (enemy, bullet) => {
+        if (!(enemy instanceof BasicEnemy)) return;
+        
+        enemy.reduceLife();
 
-    this.physics.world.addOverlap(this.swingingAsteroids, this.playerBullets, (asteroid, bullet) => {
-      if (!(asteroid instanceof BasicEnemy)) return;
-      asteroid.reduceLife();
-
-      this.playerBullets.killAndHide(bullet);
-      this.physics.world.remove(bullet.body);
+        this.playerBullets.killAndHide(bullet);
+        this.physics.world.remove(bullet.body);
+      })
     })
   }
 
   update(time: number, delta: number) {
     // Note that time and delta are in miliseconds
     this.player.update();
-    this.asteroids.update(time);
-    this.swingingAsteroids.update(time);
     this.playerBullets.update(delta);
+
+    this.enemies.forEach(enemyType => enemyType.update(time));
 
     this.cameras.main.scrollX += delta / 1000 * this.forwardSpeed;
   }
