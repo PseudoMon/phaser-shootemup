@@ -5,6 +5,8 @@ export default class PlayerBullets extends Phaser.GameObjects.Group {
   bulletInterval: number;
   msSinceLastBullet: number;
 
+  bulletSpeed: number;
+
   // Where to create the bullets
   // If they're null, don't shoot
   xShootPos: number | null; 
@@ -12,13 +14,15 @@ export default class PlayerBullets extends Phaser.GameObjects.Group {
 
   constructor(scene: Phaser.Scene) {
     super(scene, {
-      defaultKey: "bullets"
+      defaultKey: "bullet",
     });
     scene.add.existing(this);
 
     this.scene = scene;
-    this.bulletInterval = 100;
+    this.bulletInterval = 50;
     this.msSinceLastBullet = 0;
+
+    this.bulletSpeed = 300;
 
     this.xShootPos = null;
     this.yShootPos = null;
@@ -38,11 +42,16 @@ export default class PlayerBullets extends Phaser.GameObjects.Group {
     if (this.xShootPos === null || this.yShootPos === null) return;
     
     const newBullet = this.get(this.xShootPos, this.yShootPos);
+    newBullet.setScale(0.5);
     this.scene.physics.add.existing(newBullet);
-    newBullet.body.setVelocityX(500)
+    newBullet.body.setVelocityX(this.bulletSpeed)
   }
 
   update(delta: number) {
-    this.createBullet();
+    this.msSinceLastBullet += delta;
+    if (this.msSinceLastBullet >= this.bulletInterval) {
+      this.msSinceLastBullet = 0;
+      this.createBullet();
+    }
   }
 }

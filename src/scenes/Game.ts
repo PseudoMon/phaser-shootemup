@@ -3,11 +3,14 @@ import { internalWidth, internalHeight } from "../config";
 import Player from "./objects/Player";
 import Asteroids from "./objects/Asteroids";
 import SwingingAsteroids from "./objects/SwingingAsteroids";
+import PlayerBullets from "./objects/PlayerBullets";
 
 export default class Demo extends Phaser.Scene {
    player!: Player;
    asteroids!: Asteroids;
    swingingAsteroids!: SwingingAsteroids;
+   playerBullets!: PlayerBullets;
+
    forwardSpeed: number;
 
   constructor() {
@@ -29,6 +32,9 @@ export default class Demo extends Phaser.Scene {
     this.player = new Player(this, this.forwardSpeed);
     this.asteroids = new Asteroids(this);
     this.swingingAsteroids = new SwingingAsteroids(this)
+    this.playerBullets = new PlayerBullets(this)
+
+    this.player.setBulletManager(this.playerBullets);
 
     this.physics.world.addOverlap(this.player, this.asteroids, () => {
       this.player.onOverlapWithEnemy()
@@ -40,6 +46,8 @@ export default class Demo extends Phaser.Scene {
     this.player.update();
     this.asteroids.update(time);
     this.swingingAsteroids.update(time);
+    this.playerBullets.update(delta);
+
     this.cameras.main.scrollX += delta / 1000 * this.forwardSpeed;
   }
 }

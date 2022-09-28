@@ -39,6 +39,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     this.bulletManager = null;
     this.isShooting = false;
+
+    this.shootKey.on("down", () => this.isShooting = true)
+    this.shootKey.on("up", () => this.isShooting = false)
   }
 
   onOverlapWithEnemy() {
@@ -53,8 +56,11 @@ export default class Player extends Phaser.GameObjects.Sprite {
       onComplete: (tween, target) => {
         this.isInvincible = false;
       }
-    })
-    
+    }) 
+  }
+
+  setBulletManager(bulletManager: PlayerBullets) {
+    this.bulletManager = bulletManager;
   }
 
   update() {
@@ -68,14 +74,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
       this.body.setVelocityY(0)
     }
 
-    if (this.shootKey.isDown) {
-      this.isShooting = true;
-    }
-    else {
-      this.isShooting = false;
-    }
-
     if (this.isShooting && this.bulletManager) {
+      console.log("WEE")
       this.bulletManager.setShootPosition(this.x, this.y);
     }
     if (!this.isShooting && this.bulletManager) {
