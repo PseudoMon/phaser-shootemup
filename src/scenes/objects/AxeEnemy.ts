@@ -39,4 +39,10 @@ export default class AxeEnemy extends BasicEnemy {
     this.body.setVelocityX(targetx);
     this.body.setVelocityY(targety);
   }
+
+  reset() {
+    super.reset();
+    this.isLaunchingItself = false;
+    this.lockedInVelocity = null;
+  }
 }
