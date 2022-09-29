@@ -5,6 +5,8 @@ import { internalWidth, internalHeight } from "../../config"
 export default class  BasicEnemies extends Phaser.GameObjects.Group {
   scene: Phaser.Scene;
   camera: Phaser.Cameras.Scene2D.Camera;
+
+  spawnWithTime: boolean;
   timeToNextSpawn: number;
   timeDeltaSpawn: number;
   initialLives: number;
@@ -19,6 +21,7 @@ export default class  BasicEnemies extends Phaser.GameObjects.Group {
     this.scene = scene;
     this.camera = scene.cameras.main;
 
+    this.spawnWithTime = false;
     this.timeToNextSpawn = 20;
     this.timeDeltaSpawn = 1000;
 
@@ -33,7 +36,8 @@ export default class  BasicEnemies extends Phaser.GameObjects.Group {
     for (let i = 0; i < n; i++) {
       let newEnemy = this.getFirstDead();
       if (!newEnemy) {
-        newEnemy = new BasicEnemy(this.scene, xpos, ypos, this.defaultKey, this.initialLives);
+        // Yes there's a typescript error but it still works so idk why
+        newEnemy = new this.classType(this.scene, xpos, ypos, this.defaultKey, this.initialLives);
         this.add(newEnemy)
       }
       else {
@@ -52,9 +56,12 @@ export default class  BasicEnemies extends Phaser.GameObjects.Group {
   }
 
   update(time: number) {
-    if (time >= this.timeToNextSpawn) {
-      this.spawn()
-      this.timeToNextSpawn = time + this.timeDeltaSpawn;
+    if (this.spawnWithTime) {
+      // Spawn every relevant time
+      if (time >= this.timeToNextSpawn) {
+        this.spawn()
+        this.timeToNextSpawn = time + this.timeDeltaSpawn;
+      }
     }
 
     // Check if enemy is safely outside of the viewing frame

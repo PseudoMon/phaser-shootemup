@@ -6,6 +6,7 @@ import SwingingAsteroids from "./objects/SwingingAsteroids";
 import PlayerBullets from "./objects/PlayerBullets";
 import BasicEnemy from "./objects/BasicEnemy";
 import HomingEnemies from "./objects/HomingEnemies";
+import AxeEnemies from "./objects/AxeEnemies";
 
 export default class Demo extends Phaser.Scene {
    player!: Player;
@@ -27,6 +28,7 @@ export default class Demo extends Phaser.Scene {
     this.load.image("asteroid1", "assets/asteroid1.png");
     this.load.image("bullet", "assets/bullet.png");
     this.load.image("enemy3b", "assets/enemy3b.png");
+    this.load.image("enemyaxe", "assets/enemyaxe.png");
   }
 
   create() {
@@ -40,6 +42,7 @@ export default class Demo extends Phaser.Scene {
     this.enemies.push(new Asteroids(this));
     this.enemies.push(new SwingingAsteroids(this));
     this.enemies.push(new HomingEnemies(this, this.player));
+    this.enemies.push(new AxeEnemies(this, this.player));
 
     // Add collider for each enemy with player and player's bullets
     this.enemies.forEach((enemyType) => {
