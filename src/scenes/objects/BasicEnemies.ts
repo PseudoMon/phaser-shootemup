@@ -21,7 +21,7 @@ export default class  BasicEnemies extends Phaser.GameObjects.Group {
     this.scene = scene;
     this.camera = scene.cameras.main;
 
-    this.spawnWithTime = false;
+    this.spawnWithTime = false; // this should be true, but I'm testing things rn
     this.timeToNextSpawn = 20;
     this.timeDeltaSpawn = 1000;
 

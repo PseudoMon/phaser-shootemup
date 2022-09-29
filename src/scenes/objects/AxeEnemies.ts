@@ -12,14 +12,7 @@ export default class AxeEnemies extends BasicEnemies {
     this.spawnWithTime = false;
     this.player = player;
   }
-
-  spawn() {
-    super.spawn();
-    const newEnemy = this.getLast(true); // Get newly created enemy
-    // newEnemy.setRotation(Phaser.Math.DegToRad(270));
-    // newEnemy.setScale(0.05);  
-  } 
-
+  
   moveMembers() {
     this.getChildren().forEach((enemy) => {
       if (!(enemy instanceof AxeEnemy)) return;

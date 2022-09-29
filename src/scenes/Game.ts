@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { internalWidth, internalHeight } from "../config";
 import Player from "./objects/Player";
+import BasicEnemies from "./objects/BasicEnemies";
 import Asteroids from "./objects/Asteroids";
 import SwingingAsteroids from "./objects/SwingingAsteroids";
 import PlayerBullets from "./objects/PlayerBullets";
@@ -11,7 +12,7 @@ import AxeEnemies from "./objects/AxeEnemies";
 export default class Demo extends Phaser.Scene {
    player!: Player;
    playerBullets!: PlayerBullets;
-   enemies!: Asteroids[];
+   enemies!: BasicEnemies[];
 
    forwardSpeed: number;
 
