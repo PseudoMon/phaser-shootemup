@@ -41,6 +41,7 @@ export default class Demo extends Phaser.Scene {
     this.enemies.push(new SwingingAsteroids(this));
     this.enemies.push(new HomingEnemies(this, this.player));
 
+    // Add collider for each enemy with player and player's bullets
     this.enemies.forEach((enemyType) => {
       this.physics.world.addOverlap(enemyType, this.player, () => {
         this.player.onOverlapWithEnemy()
@@ -53,6 +54,15 @@ export default class Demo extends Phaser.Scene {
 
         this.playerBullets.killAndHide(bullet);
         this.physics.world.remove(bullet.body);
+      })
+    })
+
+    // Debug helpers
+    const keys = ["ONE", "TWO", "THREE", "FOUR", "FIVE"];
+    this.enemies.forEach((enemyType, idx) => {
+      this.input.keyboard.addKey(keys[idx]).on("down", () => {
+        console.log("Spawning enemy",  idx);
+        enemyType.spawn();
       })
     })
   }

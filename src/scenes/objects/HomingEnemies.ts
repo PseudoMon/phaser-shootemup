@@ -30,15 +30,15 @@ export default class HomingEnemies extends BasicEnemies {
       // TODO: Typeguarding 
 
       if (enemy.y < this.player.y - 2) {
-        enemy.body.setVelocityY(120)
-        enemy.body.setAccelerationY(15)
+        //enemy.body.setVelocityY(0)
+        enemy.body.setAccelerationY(120)
       }
       else if (enemy.y > this.player.y + 2) {
-        enemy.body.setVelocityY(-120)
-        enemy.body.setAccelerationY(-15)
+        //enemy.body.setVelocityY(0)
+        enemy.body.setAccelerationY(-120)
       }
       else {
-        enemy.body.setVelocityY(0)
+        enemy.body.setAccelerationY(0)
       }
     })
   }

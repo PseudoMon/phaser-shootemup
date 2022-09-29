@@ -15,6 +15,7 @@ export default class BasicEnemy extends Phaser.GameObjects.Sprite {
     this.currentLives = this.initialLives; 
     scene.add.existing(this)
 
+    // DEBUG functions
     this.setInteractive();
     this.on("pointerdown", () => console.log(this))
   }

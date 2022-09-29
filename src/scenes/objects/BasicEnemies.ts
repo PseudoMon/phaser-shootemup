@@ -42,7 +42,7 @@ export default class  BasicEnemies extends Phaser.GameObjects.Group {
       }
 
       newEnemy.setPosition(xpos, ypos);
-      newEnemy.setRotation(Phaser.Math.Between(0, Phaser.Math.PI2))
+      //newEnemy.setRotation(Phaser.Math.Between(0, Phaser.Math.PI2))
       
       this.scene.physics.add.existing(newEnemy);
 
