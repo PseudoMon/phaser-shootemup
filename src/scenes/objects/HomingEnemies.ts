@@ -27,7 +27,7 @@ export default class HomingEnemies extends BasicEnemies {
     super.update(time);
 
     this.getChildren().forEach(enemy => {
-      // TODO: Typeguarding 
+      if (!(enemy.body instanceof Phaser.Physics.Arcade.Body)) return;
 
       if (enemy.y < this.player.y - 2) {
         //enemy.body.setVelocityY(0)

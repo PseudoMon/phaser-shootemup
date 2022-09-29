@@ -16,8 +16,8 @@ export default class AxeEnemies extends BasicEnemies {
   spawn() {
     super.spawn();
     const newEnemy = this.getLast(true); // Get newly created enemy
-    newEnemy.setRotation(Phaser.Math.DegToRad(270));
-    newEnemy.setScale(0.05);  
+    // newEnemy.setRotation(Phaser.Math.DegToRad(270));
+    // newEnemy.setScale(0.05);  
   } 
 
   moveMembers() {

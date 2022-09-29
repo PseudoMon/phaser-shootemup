@@ -16,6 +16,9 @@ export default class AxeEnemy extends BasicEnemy {
     this.isLaunchingItself = false;
     this.lockedInVelocity = null;
     this.launchingCutoff = 80;
+
+    this.setRotation(Phaser.Math.DegToRad(270));
+    this.setScale(0.05);  
   }
 
   rotateTowards(targetx: number, targety: number) {
@@ -44,5 +47,9 @@ export default class AxeEnemy extends BasicEnemy {
     super.reset();
     this.isLaunchingItself = false;
     this.lockedInVelocity = null;
+
+    if (!(this.body instanceof Phaser.Physics.Arcade.Body)) return;
+    this.body.setVelocityX(0);
+    this.body.setVelocityY(0);
   }
 }
