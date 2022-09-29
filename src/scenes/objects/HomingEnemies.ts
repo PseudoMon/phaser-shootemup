@@ -18,9 +18,9 @@ export default class HomingEnemies extends BasicEnemies {
 
   spawn() {
     super.spawn();
-    const newEnemy = this.getLast(true);
+    const newEnemy = this.getLast(true); // Get newly created enemy
     newEnemy.setRotation(Phaser.Math.DegToRad(270));
-    newEnemy.setScale(0.15)  
+    newEnemy.setScale(0.15);  
   } 
 
   update(time: number) {

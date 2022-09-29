@@ -14,6 +14,9 @@ export default class BasicEnemy extends Phaser.GameObjects.Sprite {
     this.initialLives = initialLives;
     this.currentLives = this.initialLives; 
     scene.add.existing(this)
+
+    this.setInteractive();
+    this.on("pointerdown", () => console.log(this))
   }
 
   get isAlive(): boolean {
@@ -25,6 +28,11 @@ export default class BasicEnemy extends Phaser.GameObjects.Sprite {
     if (this.currentLives <= 0) {
       this.killAndHide()
     }
+  }
+
+  reset() {
+    // Reset lives
+    this.currentLives = this.initialLives;
   }
 
   killAndHide() {

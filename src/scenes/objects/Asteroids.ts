@@ -41,8 +41,9 @@ export default class Asteroids extends Phaser.GameObjects.Group {
       }
       
       newAsteroid.setPosition(xpos, ypos);
-      newAsteroid.setRotation(Phaser.Math.Between(0, Phaser.Math.PI2))
-      
+      const newRotation: number = Phaser.Math.Between(0, Phaser.Math.PI2);
+      newAsteroid.setRotation(newRotation);
+
       this.scene.physics.add.existing(newAsteroid);
 
       newAsteroid.active = true;

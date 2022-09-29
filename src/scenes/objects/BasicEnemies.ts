@@ -38,6 +38,7 @@ export default class  BasicEnemies extends Phaser.GameObjects.Group {
       }
       else {
         // Reset lives etc for reused enemy
+        newEnemy.reset();
       }
 
       newEnemy.setPosition(xpos, ypos);
