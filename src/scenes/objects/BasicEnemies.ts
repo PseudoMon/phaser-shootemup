@@ -2,6 +2,10 @@ import Phaser from "phaser";
 import BasicEnemy from "./BasicEnemy"
 import { internalWidth, internalHeight } from "../../config"
 
+// I JUST DISCOVERED THERE'S Group.createCallback WE SHOULD PROBABLY USE
+// THAT THAN WHATEVER TRICKS I WAS PULLING WHEN INHERITING THIS CLASS
+// AUGGGHHH
+
 export default class  BasicEnemies extends Phaser.GameObjects.Group {
   scene: Phaser.Scene;
   camera: Phaser.Cameras.Scene2D.Camera;
