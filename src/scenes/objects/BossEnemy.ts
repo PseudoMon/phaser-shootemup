@@ -27,9 +27,11 @@ export default class BossEnemy extends BasicEnemy {
     const camera = this.scene.cameras.main;
     const targetX = camera.scrollX + internalWidth - this.distanceFromRightCamera;
 
-    // Always shooting
-    this.bulletManager.setShootPosition(this.x, this.y);
-    this.bulletManager.update(delta);
+    // Shoot when moving along with the player
+    if (this.body.velocity.x > 0) {
+      this.bulletManager.setShootPosition(this.x, this.y);
+      this.bulletManager.update(delta);
+    }
 
     if (this.x > targetX) {
       this.body.setVelocityX(-80)

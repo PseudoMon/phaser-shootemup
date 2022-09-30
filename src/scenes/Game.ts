@@ -13,7 +13,8 @@ import BossEnemies from "./objects/BossEnemies";
 export default class Demo extends Phaser.Scene {
    player!: Player;
    playerBullets!: PlayerBullets;
-   enemies!: BasicEnemies[];
+   enemies!: (BasicEnemies | BossEnemies)[];
+   bossEnemies!: BossEnemies
 
    forwardSpeed: number;
 
@@ -43,13 +44,12 @@ export default class Demo extends Phaser.Scene {
     this.player.setBulletManager(this.playerBullets);
 
     this.enemies = [];
+    this.bossEnemies = new BossEnemies(this, this.player);
     this.enemies.push(new Asteroids(this));
     this.enemies.push(new SwingingAsteroids(this));
     this.enemies.push(new HomingEnemies(this, this.player));
     this.enemies.push(new AxeEnemies(this, this.player));
-    this.enemies.push(new BossEnemies(this, this.player));
-
-
+    this.enemies.push(this.bossEnemies);
 
     // Add collider for each enemy with player and player's bullets
     this.enemies.forEach((enemyType) => {

@@ -17,6 +17,7 @@ export default class BossEnemies extends BasicEnemies {
 
   spawn() {
     // custom spawn, so don't call super.spawn here
+    // in retrospect this should probably not inherit from basic enemies lol
     const xpos =  this.camera.scrollX + internalWidth + 40;
     const ypos = internalHeight / 2;
     let newEnemy = this.getFirstDead();
@@ -30,6 +31,11 @@ export default class BossEnemies extends BasicEnemies {
     }
 
     this.scene.physics.add.existing(newEnemy);
+
+    // Add collider between bullet and player
+    this.scene.physics.world.addOverlap(this.player, newEnemy.bulletManager, () => {
+      this.player.onOverlapWithEnemy()
+    })
 
     newEnemy.active = true;
     newEnemy.visible = true;
