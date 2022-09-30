@@ -11,10 +11,11 @@ import AxeEnemies from "./objects/AxeEnemies";
 import BossEnemies from "./objects/BossEnemies";
 
 export default class Demo extends Phaser.Scene {
+   bgContainer!: Phaser.GameObjects.Group;
    player!: Player;
    playerBullets!: PlayerBullets;
    enemies!: (BasicEnemies | BossEnemies)[];
-   bossEnemies!: BossEnemies
+   bossEnemies!: BossEnemies;
 
    forwardSpeed: number;
 
@@ -37,8 +38,11 @@ export default class Demo extends Phaser.Scene {
   }
 
   create() {
-    const bg = this.add.tileSprite(internalWidth / 2, internalHeight / 2, 3000, internalHeight, "bg");
-    
+    const bg = this.add.tileSprite(0, internalHeight / 2, internalWidth * 10, internalHeight, "bg");
+    bg.originX = 0;
+    this.bgContainer = this.add.group([bg], { defaultKey: "bg"}) 
+    // TODO: figure out how background tiling should work wwww
+
     this.player = new Player(this, this.forwardSpeed);
     this.playerBullets = new PlayerBullets(this);
     this.player.setBulletManager(this.playerBullets);
@@ -84,6 +88,17 @@ export default class Demo extends Phaser.Scene {
 
     this.enemies.forEach(enemyType => enemyType.update(time, delta));
 
+    // Repeat background TODO
+    // const lastLivingBg = this.bgContainer.getLast(true);
+    // if (lastLivingBg && lastLivingBg.x + lastLivingBg.width <= this.cameras.main.scrollX) {
+    //   this.bgContainer.kill(lastLivingBg)
+    // } 
+
+    // if (lastLivingBg.x + lastLivingBg.width <= this.cameras.main.scrollX + internalWidth) {
+    //   this.bgContainer.get(internalWidth, internalHeight / 2)
+    // }
+
+    // Constantly move camera to the right
     this.cameras.main.scrollX += delta / 1000 * this.forwardSpeed;
   }
 }
