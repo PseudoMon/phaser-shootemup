@@ -8,6 +8,7 @@ import PlayerBullets from "./objects/PlayerBullets";
 import BasicEnemy from "./objects/BasicEnemy";
 import HomingEnemies from "./objects/HomingEnemies";
 import AxeEnemies from "./objects/AxeEnemies";
+import BossEnemies from "./objects/BossEnemies";
 
 export default class Demo extends Phaser.Scene {
    player!: Player;
@@ -30,6 +31,8 @@ export default class Demo extends Phaser.Scene {
     this.load.image("bullet", "assets/bullet.png");
     this.load.image("enemy3b", "assets/enemy3b.png");
     this.load.image("enemyaxe", "assets/enemyaxe.png");
+    this.load.image("enemyboss", "assets/enemyboss.png");
+    this.load.image("enemybullet", "assets/enemybullet.png");
   }
 
   create() {
@@ -44,6 +47,9 @@ export default class Demo extends Phaser.Scene {
     this.enemies.push(new SwingingAsteroids(this));
     this.enemies.push(new HomingEnemies(this, this.player));
     this.enemies.push(new AxeEnemies(this, this.player));
+    this.enemies.push(new BossEnemies(this, this.player));
+
+
 
     // Add collider for each enemy with player and player's bullets
     this.enemies.forEach((enemyType) => {
@@ -76,7 +82,7 @@ export default class Demo extends Phaser.Scene {
     this.player.update();
     this.playerBullets.update(delta);
 
-    this.enemies.forEach(enemyType => enemyType.update(time));
+    this.enemies.forEach(enemyType => enemyType.update(time, delta));
 
     this.cameras.main.scrollX += delta / 1000 * this.forwardSpeed;
   }

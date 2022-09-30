@@ -15,9 +15,9 @@ export default class PlayerBullets extends Phaser.GameObjects.Group {
   xShootPos: number | null; 
   yShootPos: number | null;
 
-  constructor(scene: Phaser.Scene) {
+  constructor(scene: Phaser.Scene, texture: string = "bullet") {
     super(scene, {
-      defaultKey: "bullet",
+      defaultKey: texture,
     });
     scene.add.existing(this);
     this.camera = scene.cameras.main;

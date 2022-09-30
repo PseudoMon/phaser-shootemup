@@ -8,6 +8,7 @@ import Phaser from "phaser";
 export default class BasicEnemy extends Phaser.GameObjects.Sprite {
   initialLives: number;
   currentLives: number;
+  declare body: Phaser.Physics.Arcade.Body;
 
   constructor(scene: Phaser.Scene, x: number, y: number, texture: string, initialLives: number = 20) {
     super(scene, x, y, texture);
